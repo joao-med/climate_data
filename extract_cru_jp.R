@@ -4,17 +4,14 @@ require(tmap)
 library(raster)
 require(purrr)
 
+# Here you can add any shape file you desire
 inshpfname <- "Shape_files/shape_brazil.shp"
-
 inshp <- vect(inshpfname)
-
-plot(inshp)
 
 # Creating climate data dataset -------------------------------------------
 # selecting files
-files <- list.files("C:/dados_climaticos/separados", full.names = T)
-types <- c("cld","dtr","frs","pet","pre","tmn","tmp","tmx","vap","wet")
-
+files <- list.files("C:climate_CRU_data/", full.names = T) # To download data: https://github.com/joao-med/climate_data/blob/main/CRU_TS_download_data
+types <- c("cld","dtr","frs","pet","pre","tmn","tmp","tmx","vap","wet") # here you can choose the type of data
 
 for(i in types){
   incru_name <- files [files %>% str_detect(i)]
@@ -34,10 +31,9 @@ for(i in types){
              month = date %>% lubridate::month())
     tib <- bind_rows(tib,shp_t)
   }
-  write.csv(tib, paste0(i,".csv"),row.names = F)
-  
+  write.csv(tib, paste0(i,".csv"),row.names = F) 
 }
-
+# Again, if you do not want all type of data, you can just delete the part you do not want
 cld <- "dados_climaticos/cld.csv" %>% read.csv()
 dtr <- "dados_climaticos/dtr.csv" %>% read.csv()
 frs <- "dados_climaticos/frs.csv" %>% read.csv()
@@ -49,10 +45,10 @@ tmx <- "dados_climaticos/tmx.csv" %>% read.csv()
 vap <- "dados_climaticos/vap.csv" %>% read.csv()
 wet <- "dados_climaticos/wet.csv" %>% read.csv()
 
-
 weather <- list(cld,dtr,frs,pet,pre,
                 tmn,tmp,tmx,vap,wet) %>% 
   reduce(left_join)
 weather <- weather %>% select(-X)
+# Saving
 write_rds(weather,
           "weather.rds")
