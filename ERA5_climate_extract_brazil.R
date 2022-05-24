@@ -3,6 +3,8 @@ require(terra)
 require(tmap)
 #### Getting Brazilian climate data by microregion
 
+# This script has all the process to download and process ERA5 data. It was developed by Joao Pedro Medeiros and Gabriel Abrahao
+
 # establishing microregions
 inshpfname <- "shapes/shape_brazil.shp"
 inshp <- vect(inshpfname)
