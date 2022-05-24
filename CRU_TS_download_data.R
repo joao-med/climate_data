@@ -13,7 +13,7 @@ require(rvest)
 
 #scraping for filenames to download
 url <- "https://crudata.uea.ac.uk/cru/data/hrg/cru_ts_4.05/cruts.2103051243.v4.05/"
-types <- c("cld","dtr","frs","pet","pre","tmn","tmp","tmx","vap","wet")
+types <- c("cld","dtr","frs","pet","pre","tmn","tmp","tmx","vap","wet") # here you can choose which kind of data you want to download 
 urls <- paste0(url,types)
 tx_types <- tibble() 
 for (i in urls){
